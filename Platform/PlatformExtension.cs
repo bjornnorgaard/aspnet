@@ -4,7 +4,7 @@ using Microsoft.Extensions.Hosting;
 
 namespace Platform;
 
-public static class ServiceCollectionExtension
+public static class PlatformExtension
 {
     public static IHostApplicationBuilder AddPlatform(this IHostApplicationBuilder builder)
     {
