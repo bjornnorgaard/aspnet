@@ -1,16 +1,10 @@
-var builder = WebApplication.CreateBuilder(args);
+using Platform;
 
-// Add services to the container.
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi();
+var builder = WebApplication.CreateBuilder(args);
+builder.AddPlatform();
 
 var app = builder.Build();
-
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.MapOpenApi();
-}
+app.UsePlatform();
 
 var summaries = new[]
 {
