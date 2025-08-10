@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Platform.Configurations;
 
 namespace Platform;
 
@@ -8,14 +8,13 @@ public static class PlatformExtension
 {
     public static IHostApplicationBuilder AddPlatform(this IHostApplicationBuilder builder)
     {
-        builder.Services.AddOpenApi();
+        builder.AddPlatformOpenApi();
         return builder;
     }
 
     public static WebApplication UsePlatform(this WebApplication app)
     {
-        app.MapOpenApi();
+        app.MapPlatformOpenApi();
         return app;
     }
-
 }
