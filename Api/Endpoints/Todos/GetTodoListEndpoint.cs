@@ -16,15 +16,19 @@ public class GetTodoListEndpoint : AbstractEndpoint
         Description = "Retrieves all todo items."
     };
 
-    public record Request(int Limit);
+    public record Request(int Limit = 10, Guid? Cursor = null);
 
     protected override Delegate Handle => async (
         [FromServices] GetTodoList.Handler feature,
         [FromBody] Request request,
         CancellationToken ct) =>
     {
-        var command = new GetTodoList.Command { Limit = request.Limit };
+        var command = new GetTodoList.Command
+        {
+            Limit = request.Limit,
+            Cursor = request.Cursor
+        };
         var result = await feature.Handle(command, ct);
-        return Results.Ok(result.List);
+        return Results.Ok(result);
     };
 }
