@@ -9,8 +9,10 @@ public class GetTodoEndpoint(ILogger<GetTodoEndpoint> logger) : AbstractEndpoint
         return new EndpointDefinition
         {
             Group = Groups.Todos,
+            Method = HttpMethod.Get,
             Version = Versions.V1,
             Route = Routes.GetTodo,
+            Description = "Retrieves a todo item by ID."
         };
     }
 

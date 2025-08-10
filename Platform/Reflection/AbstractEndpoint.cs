@@ -14,6 +14,9 @@ public abstract class AbstractEndpoint
         var d = Definition();
         app.MapGroup(d.Version)
             .MapGroup(d.Group)
-            .MapGet(d.Route, Handle);
+            .WithTags(d.Group, d.Version)
+            .WithName($"Route name: {d.Route}")
+            .WithDescription(d.Description ?? $"Endpoint for {d.Group} {d.Version} {d.Route}")
+            .MapMethods(d.Route, [d.Method.ToString()], Handle);
     }
 }
