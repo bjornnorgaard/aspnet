@@ -4,17 +4,14 @@ namespace Api.Endpoints.Todos;
 
 public class GetTodoListEndpoint(ILogger<GetTodoListEndpoint> logger) : AbstractEndpoint
 {
-    public override EndpointDefinition Definition()
+    public override EndpointDefinition Definition() => new()
     {
-        return new EndpointDefinition
-        {
-            Group = Groups.Todos,
-            Method = HttpMethod.Get,
-            Version = Versions.V1,
-            Route = "get-todo-list",
-            Description = "Retrieves all todo items."
-        };
-    }
+        Group = Groups.Todos,
+        Method = HttpMethod.Get,
+        Version = Versions.V1,
+        Route = "get-todo-list",
+        Description = "Retrieves all todo items."
+    };
 
     public override Delegate Handle => (int page, int pageSize) =>
     {
