@@ -11,7 +11,7 @@ public class GetTodoListEndpoint(ILogger<GetTodoListEndpoint> logger) : Abstract
             Group = Groups.Todos,
             Method = HttpMethod.Get,
             Version = Versions.V1,
-            Route = Routes.GetTodoList,
+            Route = "get-todo-list",
             Description = "Retrieves all todo items."
         };
     }
