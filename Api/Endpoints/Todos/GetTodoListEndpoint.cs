@@ -16,9 +16,12 @@ public class GetTodoListEndpoint(ILogger<GetTodoListEndpoint> logger) : Abstract
         };
     }
 
-    public override IResult Handle()
+    public override Delegate Handle()
     {
-        logger.LogInformation("Handling GetTodos request.");
-        return Results.Ok("All todo items retrieved successfully.");
+        return (int page, int pageSize) =>
+        {
+            logger.LogInformation("Handling GetTodos request with page: {Page}, pageSize: {PageSize}", page, pageSize);
+            return Results.Ok($"Todo items retrieved - page {page}, size {pageSize}.");
+        };
     }
 }

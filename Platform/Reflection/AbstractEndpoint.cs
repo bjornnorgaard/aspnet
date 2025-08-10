@@ -7,7 +7,7 @@ public abstract class AbstractEndpoint
 {
     public abstract EndpointDefinition Definition();
 
-    public abstract IResult Handle();
+    public abstract Delegate Handle();
 
     public virtual void Register(WebApplication app)
     {
@@ -17,6 +17,6 @@ public abstract class AbstractEndpoint
             .WithTags(d.Group, d.Version)
             .WithName($"Route name: {d.Route}")
             .WithDescription(d.Description ?? $"Endpoint for {d.Group} {d.Version} {d.Route}")
-            .MapMethods(d.Route, [d.Method.ToString()], Handle);
+            .MapMethods(d.Route, [d.Method.ToString()], Handle());
     }
 }
