@@ -9,6 +9,7 @@ public static class PlatformExtension
 {
     public static IHostApplicationBuilder AddPlatform(this IHostApplicationBuilder builder, Assembly anchor)
     {
+        builder.AddPlatformExceptionHandling();
         builder.AddPlatformOpenApi();
         builder.AddPlatformFeatures(anchor);
         builder.AddPlatformEndpoints(anchor);
@@ -17,6 +18,7 @@ public static class PlatformExtension
 
     public static WebApplication UsePlatform(this WebApplication app, Assembly anchor)
     {
+        app.UsePlatformExceptionHandling();
         app.MapPlatformOpenApi();
         app.MapPlatformEndpoints(anchor);
         return app;

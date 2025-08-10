@@ -31,13 +31,9 @@ public class UpdateTodoEndpoint : AbstractEndpoint
             Description = request.Description,
             IsCompleted = request.IsCompleted
         };
+
         var result = await feature.Handle(command, ct);
 
-        if (!result.Success)
-        {
-            return Results.NotFound($"Todo with ID {id} not found.");
-        }
-
-        return Results.NoContent();
+        return result.Success ? Results.NoContent() : Results.NotFound($"Todo with id {id} not found");
     };
 }

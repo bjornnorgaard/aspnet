@@ -23,6 +23,17 @@ public class UpdateTodo
     {
         public async Task<Result> Handle(Command command, CancellationToken ct)
         {
+            // Validate input
+            if (string.IsNullOrWhiteSpace(command.Title))
+            {
+                throw new ArgumentException("Title cannot be empty", nameof(command.Title));
+            }
+
+            if (string.IsNullOrWhiteSpace(command.Description))
+            {
+                throw new ArgumentException("Description cannot be empty", nameof(command.Description));
+            }
+
             var rowsAffected = await context.Todos
                 .Where(t => t.Id == command.Id)
                 .ExecuteUpdateAsync(setters => setters
