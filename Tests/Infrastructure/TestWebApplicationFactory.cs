@@ -12,7 +12,7 @@ namespace Tests.Infrastructure;
 public class TestWebApplicationFactory : WebApplicationFactory<AssemblyAnchor>, IAsyncLifetime
 {
     private readonly PostgreSqlContainer _dbContainer = new PostgreSqlBuilder()
-        .WithImage("postgres:15")
+        .WithImage("postgres:17")
         .WithDatabase("testdb")
         .WithUsername("testuser")
         .WithPassword("testpass")
