@@ -16,12 +16,9 @@ public class GetTodoEndpoint(ILogger<GetTodoEndpoint> logger) : AbstractEndpoint
         };
     }
 
-    public override Delegate Handle()
+    public override Delegate Handle => (int id) =>
     {
-        return (int id) =>
-        {
-            logger.LogInformation("Handling GetTodo request for ID: {Id}", id);
-            return Results.Ok($"Todo item {id} retrieved successfully.");
-        };
-    }
+        logger.LogInformation("Handling GetTodo request for ID: {Id}", id);
+        return Results.Ok($"Todo item {id} retrieved successfully.");
+    };
 }

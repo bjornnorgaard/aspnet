@@ -18,18 +18,15 @@ public class CreateTodoEndpoint(ILogger<CreateTodoEndpoint> logger) : AbstractEn
         };
     }
 
-    public override Delegate Handle()
+    public override Delegate Handle => (CreateTodoRequest request) =>
     {
-        return (CreateTodoRequest request) =>
+        logger.LogInformation("Creating new todo: {Title}", request.Title);
+        return Results.Created($"/api/v1/todos/{Guid.NewGuid()}", new
         {
-            logger.LogInformation("Creating new todo: {Title}", request.Title);
-            return Results.Created($"/api/v1/todos/{Guid.NewGuid()}", new
-            {
-                Id = Guid.NewGuid(),
-                Title = request.Title,
-                Description = request.Description,
-                CreatedAt = DateTime.UtcNow
-            });
-        };
-    }
+            Id = Guid.NewGuid(),
+            Title = request.Title,
+            Description = request.Description,
+            CreatedAt = DateTime.UtcNow
+        });
+    };
 }
