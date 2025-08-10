@@ -1,6 +1,6 @@
 namespace Api.Endpoints;
 
-public static class EndpointGroup
+public static class Groups
 {
     public const string Todos = "todos";
     public const string Users = "users";

@@ -1,6 +1,6 @@
 namespace Api.Endpoints;
 
-public static class EndpointRoutes
+public static class Routes
 {
     public const string GetTodo = "get-todo";
 }

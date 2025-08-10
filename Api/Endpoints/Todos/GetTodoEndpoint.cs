@@ -8,14 +8,14 @@ public class GetTodoEndpoint(ILogger<GetTodoEndpoint> logger) : IEndpoint
     {
         return new EndpointDefinition
         {
-            Group = EndpointGroup.Todos,
-            Version = EndpointVersion.V1,
-            Route = EndpointRoutes.GetTodo,
+            Group = Groups.Todos,
+            Version = Versions.V1,
+            Route = Routes.GetTodo,
         };
     }
 
     public IResult Handle()
     {
-        throw new NotImplementedException();
+        return Results.Ok("Todo item retrieved successfully.");
     }
 }
