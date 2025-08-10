@@ -8,8 +8,8 @@ public class GetTodoList
 {
     public class Command
     {
-        public int Limit { get; set; } = 10;
-        public Guid? Cursor { get; set; }
+        public int Limit { get; init; } = 10;
+        public Guid? Cursor { get; init; }
     }
 
     public class Result
