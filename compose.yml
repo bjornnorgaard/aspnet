@@ -4,9 +4,7 @@ services:
     ports:
       - "5432:5432"
     environment:
-      POSTGRES_USER: "todos"
       POSTGRES_PASSWORD: "mysecretpassword"
-      POSTGRES_DB: "todos"
     volumes:
       - ./Volumes/postgres:/var/lib/postgresql/data
       
