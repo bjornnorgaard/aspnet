@@ -6,10 +6,6 @@
 GET {{Api_HostAddress}}/test
 Accept: application/json
 
-### Database Migration
-POST {{Api_HostAddress}}/migrate
-Content-Type: application/json
-
 ### Weather Forecast (if available)
 GET {{Api_HostAddress}}/weatherforecast/
 Accept: application/json
