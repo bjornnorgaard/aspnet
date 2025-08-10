@@ -5,9 +5,9 @@ namespace Platform.Reflection;
 
 public abstract class AbstractEndpoint
 {
-    public abstract EndpointDefinition Definition();
+    protected abstract EndpointDefinition Definition();
 
-    public abstract Delegate Handle { get; }
+    protected abstract Delegate Handle { get; }
 
     public virtual void Register(WebApplication app)
     {

@@ -5,7 +5,7 @@ namespace Api.Endpoints.Todos;
 
 public class GetTodoByIdEndpoint(ILogger<GetTodoByIdEndpoint> logger) : AbstractEndpoint
 {
-    public override EndpointDefinition Definition() => new()
+    protected override EndpointDefinition Definition() => new()
     {
         Group = Groups.Todos,
         Method = HttpMethod.Get,
@@ -14,7 +14,7 @@ public class GetTodoByIdEndpoint(ILogger<GetTodoByIdEndpoint> logger) : Abstract
         Description = "Retrieves a todo item by ID."
     };
 
-    public override Delegate Handle => (Guid id) =>
+    protected override Delegate Handle => (Guid id) =>
     {
         logger.LogInformation("Handling GetTodoById request with id: {Id}", id);
         return Results.Ok($"Todo item retrieved - ID: {id}.");
