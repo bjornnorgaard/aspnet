@@ -1,0 +1,53 @@
+﻿@Api_HostAddress = http://localhost:5260
+@BaseUrl = {{Api_HostAddress}}/v1/todos
+
+# Variables for testing
+@TestTitle = Complete project documentation
+@TestDescription = Write comprehensive documentation for the new feature including API docs and user guides
+
+### Create a new Todo
+POST {{BaseUrl}}/create-todo
+Content-Type: application/json
+
+{
+  "title": "{{TestTitle}}",
+  "description": "{{TestDescription}}"
+}
+
+### Create Todo with different data
+POST {{BaseUrl}}/create-todo
+Content-Type: application/json
+
+{
+  "title": "Setup CI/CD pipeline",
+  "description": "Configure GitHub Actions for automated testing and deployment"
+}
+
+### Create Todo for testing
+POST {{BaseUrl}}/create-todo
+Content-Type: application/json
+
+{
+  "title": "Review code changes",
+  "description": "Perform code review for the latest pull requests"
+}
+
+### Error Cases
+
+### Create Todo with empty title (should return 400)
+POST {{BaseUrl}}/create-todo
+Content-Type: application/json
+
+{
+  "title": "",
+  "description": "This should fail due to empty title"
+}
+
+### Create Todo with empty description (should return 400)
+POST {{BaseUrl}}/create-todo
+Content-Type: application/json
+
+{
+  "title": "Valid title",
+  "description": ""
+}

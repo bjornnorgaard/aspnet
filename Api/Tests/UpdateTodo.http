@@ -1,0 +1,79 @@
+﻿@Api_HostAddress = http://localhost:5260
+@BaseUrl = {{Api_HostAddress}}/v1/todos
+
+# Variables for testing (replace with actual IDs from create responses)
+@TodoId = 550e8400-e29b-41d4-a716-446655440000
+@UpdatedTitle = Complete project documentation (Updated)
+@UpdatedDescription = Write comprehensive documentation for the new feature including API docs, user guides, and deployment instructions
+
+### Update Todo - Mark as completed
+PUT {{BaseUrl}}/update-todo/{{TodoId}}
+Content-Type: application/json
+
+{
+  "title": "{{UpdatedTitle}}",
+  "description": "{{UpdatedDescription}}",
+  "isCompleted": true
+}
+
+### Update Todo - Mark as incomplete
+PUT {{BaseUrl}}/update-todo/{{TodoId}}
+Content-Type: application/json
+
+{
+  "title": "{{UpdatedTitle}}",
+  "description": "{{UpdatedDescription}}",
+  "isCompleted": false
+}
+
+### Update Todo - Change title only
+PUT {{BaseUrl}}/update-todo/{{TodoId}}
+Content-Type: application/json
+
+{
+  "title": "Updated title only",
+  "description": "{{UpdatedDescription}}",
+  "isCompleted": false
+}
+
+### Update Todo - Change description only
+PUT {{BaseUrl}}/update-todo/{{TodoId}}
+Content-Type: application/json
+
+{
+  "title": "{{UpdatedTitle}}",
+  "description": "Updated description with new requirements and additional context",
+  "isCompleted": false
+}
+
+### Error Cases
+
+### Update non-existent Todo (should return 404)
+PUT {{BaseUrl}}/update-todo/99999999-9999-9999-9999-999999999999
+Content-Type: application/json
+
+{
+  "title": "Non-existent todo",
+  "description": "This should fail",
+  "isCompleted": false
+}
+
+### Update Todo with empty title (should return 400)
+PUT {{BaseUrl}}/update-todo/{{TodoId}}
+Content-Type: application/json
+
+{
+  "title": "",
+  "description": "Valid description",
+  "isCompleted": false
+}
+
+### Update Todo with empty description (should return 400)
+PUT {{BaseUrl}}/update-todo/{{TodoId}}
+Content-Type: application/json
+
+{
+  "title": "Valid title",
+  "description": "",
+  "isCompleted": false
+}

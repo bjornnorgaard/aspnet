@@ -1,0 +1,81 @@
+﻿@Api_HostAddress = http://localhost:5260
+@BaseUrl = {{Api_HostAddress}}/v1/todos
+
+### Complete Todo Workflow Test
+### This file demonstrates a full workflow using all Todo features in sequence
+
+### Step 1: Create initial todos
+POST {{BaseUrl}}/create-todo
+Content-Type: application/json
+
+{
+  "title": "Design database schema",
+  "description": "Create ERD and define table relationships for the new module"
+}
+
+###
+POST {{BaseUrl}}/create-todo
+Content-Type: application/json
+
+{
+  "title": "Implement authentication",
+  "description": "Add JWT-based authentication with refresh tokens"
+}
+
+###
+POST {{BaseUrl}}/create-todo
+Content-Type: application/json
+
+{
+  "title": "Write unit tests",
+  "description": "Achieve 90% code coverage for all new features"
+}
+
+### Step 2: Get all todos to see our created items
+POST {{BaseUrl}}/get-todo-list
+Content-Type: application/json
+
+{
+  "limit": 10
+}
+
+### Step 3: Get a specific todo by ID (replace with actual ID from Step 1 response)
+GET {{BaseUrl}}/get-todo-by-id/550e8400-e29b-41d4-a716-446655440000
+Accept: application/json
+
+### Step 4: Update the todo to mark it as completed
+PUT {{BaseUrl}}/update-todo/550e8400-e29b-41d4-a716-446655440000
+Content-Type: application/json
+
+{
+  "title": "Design database schema (Completed)",
+  "description": "Create ERD and define table relationships for the new module - DONE",
+  "isCompleted": true
+}
+
+### Step 5: Get the updated todo to verify changes
+GET {{BaseUrl}}/get-todo-by-id/550e8400-e29b-41d4-a716-446655440000
+Accept: application/json
+
+### Step 6: Get todo list again to see the updated status
+POST {{BaseUrl}}/get-todo-list
+Content-Type: application/json
+
+{
+  "limit": 10
+}
+
+### Step 7: Delete the completed todo
+DELETE {{BaseUrl}}/delete-todo/550e8400-e29b-41d4-a716-446655440000
+
+### Step 8: Verify deletion by trying to get the deleted todo (should return 404)
+GET {{BaseUrl}}/get-todo-by-id/550e8400-e29b-41d4-a716-446655440000
+Accept: application/json
+
+### Step 9: Final list to see remaining todos
+POST {{BaseUrl}}/get-todo-list
+Content-Type: application/json
+
+{
+  "limit": 10
+}
