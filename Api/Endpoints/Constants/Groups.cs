@@ -1,4 +1,4 @@
-namespace Api.Endpoints;
+namespace Api.Endpoints.Constants;
 
 public static class Groups
 {
