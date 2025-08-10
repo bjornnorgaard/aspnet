@@ -11,6 +11,7 @@ public static class PlatformExtension
     {
         builder.AddPlatformOpenApi();
         builder.AddPlatformEndpoints(anchor);
+        builder.AddPlatformFeatures(anchor);
         return builder;
     }
 

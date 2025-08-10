@@ -1,9 +1,10 @@
 ﻿using Api.Endpoints.Constants;
+using Api.Features.Todos;
 using Platform.Reflection;
 
 namespace Api.Endpoints.Todos;
 
-public class GetTodoListEndpoint(ILogger<GetTodoListEndpoint> logger) : AbstractEndpoint
+public class GetTodoListEndpoint(GetTodoList.Handler feature) : AbstractEndpoint
 {
     protected override EndpointDefinition Definition() => new()
     {
@@ -14,9 +15,10 @@ public class GetTodoListEndpoint(ILogger<GetTodoListEndpoint> logger) : Abstract
         Description = "Retrieves all todo items."
     };
 
-    protected override Delegate Handle => (int page, int pageSize) =>
+    protected override Delegate Handle => async (int limit) =>
     {
-        logger.LogInformation("Handling GetTodos request with page: {Page}, pageSize: {PageSize}", page, pageSize);
-        return Results.Ok($"Todo items retrieved - page {page}, size {pageSize}.");
+        var request = new GetTodoList.Request { Limit = limit };
+        var result = await feature.Handle(request, CancellationToken.None);
+        return Results.Ok(result.List);
     };
 }
