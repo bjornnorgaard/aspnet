@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Api.Database.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20250810130126_Initial")]
+    [Migration("20250810153333_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -36,14 +36,16 @@ namespace Api.Database.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(1000)
+                        .HasColumnType("character varying(1000)");
 
                     b.Property<bool>("IsCompleted")
                         .HasColumnType("boolean");
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
 
                     b.HasKey("Id");
 
