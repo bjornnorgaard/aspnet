@@ -6,10 +6,11 @@ using Platform;
 var anchor = typeof(AssemblyAnchor).Assembly;
 
 var builder = WebApplication.CreateBuilder(args);
-builder.AddPlatform(anchor);
 
 var cs = builder.Configuration.GetConnectionString("DatabaseConnection");
 builder.Services.AddDbContextPool<Context>(o => o.UseNpgsql(cs));
+
+builder.AddPlatform(anchor);
 
 var app = builder.Build();
 app.UsePlatform(anchor);
