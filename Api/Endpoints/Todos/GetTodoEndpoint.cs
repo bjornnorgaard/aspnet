@@ -2,9 +2,9 @@ using Platform.Reflection;
 
 namespace Api.Endpoints.Todos;
 
-public class GetTodoEndpoint(ILogger<GetTodoEndpoint> logger) : IEndpoint
+public class GetTodoEndpoint(ILogger<GetTodoEndpoint> logger) : AbstractEndpoint
 {
-    public static EndpointDefinition Definition()
+    public override EndpointDefinition Definition()
     {
         return new EndpointDefinition
         {
@@ -14,7 +14,7 @@ public class GetTodoEndpoint(ILogger<GetTodoEndpoint> logger) : IEndpoint
         };
     }
 
-    public IResult Handle()
+    public override IResult Handle()
     {
         logger.LogInformation("Handling GetTodo request.");
         return Results.Ok("Todo item retrieved successfully.");

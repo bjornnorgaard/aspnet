@@ -15,11 +15,11 @@ public static class EndpointConfiguration
 
     public static WebApplication MapPlatformEndpoints(this WebApplication app, Assembly anchor)
     {
-        var types = anchor.GetTypes().Where(t => t.IsAssignableTo(typeof(IEndpoint)));
+        var types = anchor.GetTypes().Where(t => t.IsAssignableTo(typeof(AbstractEndpoint)));
         foreach (var type in types)
         {
             var definitionMethod = type.GetMethods()
-                .FirstOrDefault(m => m.Name == nameof(IEndpoint.Definition));
+                .FirstOrDefault(m => m.Name == nameof(AbstractEndpoint.Definition));
 
             if (definitionMethod == null)
             {
@@ -37,7 +37,7 @@ public static class EndpointConfiguration
                 throw new InvalidEndpointDefinitionException(type, definition.GetType());
             }
 
-            var handlerMethod = type.GetMethod(nameof(IEndpoint.Handle), BindingFlags.Public | BindingFlags.Instance);
+            var handlerMethod = type.GetMethod(nameof(AbstractEndpoint.Handle), BindingFlags.Public | BindingFlags.Instance);
             if (handlerMethod == null)
             {
                 throw new EndpointHandlerNotFoundException(type);
@@ -45,7 +45,7 @@ public static class EndpointConfiguration
 
             app.MapGroup(endpointDefinition.Version)
                 .MapGroup(endpointDefinition.Group)
-                .MapGet(endpointDefinition.Route, (IEndpoint endpoint) => handlerMethod.Invoke(endpoint, null));
+                .MapGet(endpointDefinition.Route, async (AbstractEndpoint abstractEndpoint) => await (dynamic)handlerMethod.Invoke(abstractEndpoint, null));
         }
 
         return app;
@@ -57,7 +57,7 @@ public class MissingEndpointDefinitionException : Exception
     public MissingEndpointDefinitionException(Type type)
     {
         var message =
-            $"The type {type.FullName} does not implement the required static method '{nameof(IEndpoint.Definition)}' from the {nameof(IEndpoint)} interface.";
+            $"The type {type.FullName} does not implement the required static method '{nameof(AbstractEndpoint.Definition)}' from the {nameof(AbstractEndpoint)} interface.";
         Console.WriteLine(message);
         throw new InvalidOperationException(message);
     }
@@ -68,7 +68,7 @@ public class EndpointDefinitionInvocationException : Exception
     public EndpointDefinitionInvocationException(Type type)
     {
         var message =
-            $"The static method '{nameof(IEndpoint.Definition)}' from the type {type.FullName} returned null. Ensure it returns a valid endpoint definition.";
+            $"The static method '{nameof(AbstractEndpoint.Definition)}' from the type {type.FullName} returned null. Ensure it returns a valid endpoint definition.";
         Console.WriteLine(message);
         throw new InvalidOperationException(message);
     }
@@ -79,7 +79,7 @@ public class InvalidEndpointDefinitionException : Exception
     public InvalidEndpointDefinitionException(Type type, Type definitionType)
     {
         var message =
-            $"The static method '{nameof(IEndpoint.Definition)}' from the type {type.FullName} returned an invalid type. Expected {nameof(EndpointDefinition)}, but got {definitionType.FullName}.";
+            $"The static method '{nameof(AbstractEndpoint.Definition)}' from the type {type.FullName} returned an invalid type. Expected {nameof(EndpointDefinition)}, but got {definitionType.FullName}.";
         Console.WriteLine(message);
         throw new InvalidOperationException(message);
     }
@@ -90,7 +90,7 @@ public class EndpointHandlerNotFoundException : Exception
     public EndpointHandlerNotFoundException(Type type)
     {
         var message =
-            $"The type {type.FullName} does not implement the required instance method '{nameof(IEndpoint.Handle)}'.";
+            $"The type {type.FullName} does not implement the required instance method '{nameof(AbstractEndpoint.Handle)}'.";
         Console.WriteLine(message);
         throw new InvalidOperationException(message);
     }
