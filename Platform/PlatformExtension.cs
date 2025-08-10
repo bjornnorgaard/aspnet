@@ -10,8 +10,8 @@ public static class PlatformExtension
     public static IHostApplicationBuilder AddPlatform(this IHostApplicationBuilder builder, Assembly anchor)
     {
         builder.AddPlatformOpenApi();
-        builder.AddPlatformEndpoints(anchor);
         builder.AddPlatformFeatures(anchor);
+        builder.AddPlatformEndpoints(anchor);
         return builder;
     }
 

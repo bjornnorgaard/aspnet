@@ -15,10 +15,10 @@ public class GetTodoListEndpoint(GetTodoList.Handler feature) : AbstractEndpoint
         Description = "Retrieves all todo items."
     };
 
-    protected override Delegate Handle => async (int limit) =>
+    protected override Delegate Handle => async (int limit, CancellationToken ct) =>
     {
         var request = new GetTodoList.Request { Limit = limit };
-        var result = await feature.Handle(request, CancellationToken.None);
+        var result = await feature.Handle(request, ct);
         return Results.Ok(result.List);
     };
 }

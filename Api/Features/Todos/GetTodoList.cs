@@ -4,7 +4,7 @@ using Platform.Reflection;
 
 namespace Api.Features.Todos;
 
-public class GetTodoList : AbstractFeature
+public class GetTodoList
 {
     public class Request
     {
@@ -24,7 +24,7 @@ public class GetTodoList : AbstractFeature
         }
     }
 
-    public class Handler(Context context)
+    public class Handler(Context context) : AbstractFeature
     {
         public async Task<Result> Handle(Request request, CancellationToken ct)
         {
