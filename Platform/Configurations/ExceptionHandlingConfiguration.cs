@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Platform.Middleware;
 
@@ -9,7 +8,7 @@ public static class ExceptionHandlingConfiguration
 {
     public static IHostApplicationBuilder AddPlatformExceptionHandling(this IHostApplicationBuilder builder)
     {
-        builder.Services.AddTransient<GlobalExceptionMiddleware>();
+        // builder.Services.AddTransient<GlobalExceptionMiddleware>();
         return builder;
     }
 

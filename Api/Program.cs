@@ -15,6 +15,6 @@ app.UsePlatform(anchor);
 
 using var scope = app.Services.CreateScope();
 var context = scope.ServiceProvider.GetRequiredService<Context>();
-await context.Database.MigrateAsync();
+context.Database.Migrate();
 
 app.Run();
