@@ -1,4 +1,6 @@
 ﻿using Api.Endpoints.Constants;
+using Api.Features.Todos;
+using Microsoft.AspNetCore.Mvc;
 using Platform.Reflection;
 
 namespace Api.Endpoints.Todos;
@@ -14,9 +16,21 @@ public class GetTodoByIdEndpoint(ILogger<GetTodoByIdEndpoint> logger) : Abstract
         Description = "Retrieves a todo item by ID."
     };
 
-    protected override Delegate Handle => (Guid id) =>
+    protected override Delegate Handle => async (
+        [FromServices] GetTodoById.Handler feature,
+        [FromRoute] Guid id,
+        CancellationToken ct) =>
     {
         logger.LogInformation("Handling GetTodoById request with id: {Id}", id);
-        return Results.Ok($"Todo item retrieved - ID: {id}.");
+
+        var command = new GetTodoById.Command { Id = id };
+        var result = await feature.Handle(command, ct);
+
+        if (result.Todo == null)
+        {
+            return Results.NotFound($"Todo with ID {id} not found.");
+        }
+
+        return Results.Ok(result.Todo);
     };
 }
