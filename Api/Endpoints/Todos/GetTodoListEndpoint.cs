@@ -18,11 +18,13 @@ public class GetTodoListEndpoint : AbstractEndpoint
 
     public record Request(int Limit);
 
-    protected override Delegate Handle => async ([FromServices] GetTodoList.Handler feature, [FromBody] Request request,
+    protected override Delegate Handle => async (
+        [FromServices] GetTodoList.Handler feature,
+        [FromBody] Request request,
         CancellationToken ct) =>
     {
-        var req = new GetTodoList.Request { Limit = request.Limit };
-        var result = await feature.Handle(req, ct);
+        var command = new GetTodoList.Command { Limit = request.Limit };
+        var result = await feature.Handle(command, ct);
         return Results.Ok(result.List);
     };
 }

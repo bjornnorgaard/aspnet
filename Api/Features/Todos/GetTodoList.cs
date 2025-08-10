@@ -6,7 +6,7 @@ namespace Api.Features.Todos;
 
 public class GetTodoList
 {
-    public class Request
+    public class Command
     {
         public int Limit { get; set; }
     }
@@ -26,10 +26,10 @@ public class GetTodoList
 
     public class Handler(Context context) : AbstractFeature
     {
-        public async Task<Result> Handle(Request request, CancellationToken ct)
+        public async Task<Result> Handle(Command command, CancellationToken ct)
         {
             var todos = await context.Todos.AsNoTracking()
-                .Take(request.Limit)
+                .Take(command.Limit)
                 .Select(t => new Result.Todo
                 {
                     Id = t.Id,
