@@ -4,6 +4,7 @@ namespace Platform.Reflection;
 
 public interface IEndpoint
 {
-    public EndpointDefinition Definition();
+    public static abstract EndpointDefinition Definition();
     public IResult Handle();
 }
+

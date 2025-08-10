@@ -4,7 +4,7 @@ namespace Api.Endpoints.Todos;
 
 public class GetTodoEndpoint(ILogger<GetTodoEndpoint> logger) : IEndpoint
 {
-    public EndpointDefinition Definition()
+    public static EndpointDefinition Definition()
     {
         return new EndpointDefinition
         {
@@ -16,6 +16,7 @@ public class GetTodoEndpoint(ILogger<GetTodoEndpoint> logger) : IEndpoint
 
     public IResult Handle()
     {
+        logger.LogInformation("Handling GetTodo request.");
         return Results.Ok("Todo item retrieved successfully.");
     }
 }
