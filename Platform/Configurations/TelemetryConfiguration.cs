@@ -47,7 +47,6 @@ public static class TelemetryConfiguration
                     serviceVersion: serviceVersion,
                     serviceNamespace: serviceNamespace,
                     serviceInstanceId: instanceId))
-                .AddConsoleExporter()
                 .AddOtlpExporter();
         });
     }
