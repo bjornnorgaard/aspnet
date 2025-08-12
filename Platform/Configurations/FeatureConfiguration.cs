@@ -7,7 +7,7 @@ namespace Platform.Configurations;
 
 public static class FeatureConfiguration
 {
-    public static IHostApplicationBuilder AddPlatformFeatures(this IHostApplicationBuilder builder, Assembly anchor)
+    public static void AddPlatformFeatures(this IHostApplicationBuilder builder, Assembly anchor)
     {
         var featureTypes = anchor.GetTypes()
             .Where(type => type.IsSubclassOf(typeof(AbstractFeature)) && !type.IsAbstract)
@@ -17,7 +17,5 @@ public static class FeatureConfiguration
         {
             builder.Services.AddTransient(featureType);
         }
-
-        return builder;
     }
 }

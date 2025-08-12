@@ -7,16 +7,14 @@ namespace Platform.Configurations;
 
 public static class OpenApiConfiguration
 {
-    public static IHostApplicationBuilder AddPlatformOpenApi(this IHostApplicationBuilder builder)
+    public static void AddPlatformOpenApi(this IHostApplicationBuilder builder)
     {
         builder.Services.AddOpenApi();
-        return builder;
     }
 
-    public static WebApplication MapPlatformOpenApi(this WebApplication app)
+    public static void MapPlatformOpenApi(this WebApplication app)
     {
         app.MapOpenApi();
         app.MapScalarApiReference();
-        return app;
     }
 }

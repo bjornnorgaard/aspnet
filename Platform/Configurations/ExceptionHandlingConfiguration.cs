@@ -6,15 +6,13 @@ namespace Platform.Configurations;
 
 public static class ExceptionHandlingConfiguration
 {
-    public static IHostApplicationBuilder AddPlatformExceptionHandling(this IHostApplicationBuilder builder)
+    public static void AddPlatformExceptionHandling(this IHostApplicationBuilder builder)
     {
         // builder.Services.AddTransient<GlobalExceptionMiddleware>();
-        return builder;
     }
 
-    public static WebApplication UsePlatformExceptionHandling(this WebApplication app)
+    public static void UsePlatformExceptionHandling(this WebApplication app)
     {
         app.UseMiddleware<GlobalExceptionMiddleware>();
-        return app;
     }
 }

@@ -8,7 +8,7 @@ namespace Platform.Configurations;
 
 public static class EndpointConfiguration
 {
-    public static IHostApplicationBuilder AddPlatformEndpoints(this IHostApplicationBuilder builder, Assembly anchor)
+    public static void AddPlatformEndpoints(this IHostApplicationBuilder builder, Assembly anchor)
     {
         var endpointTypes = anchor.GetTypes()
             .Where(type => type.IsSubclassOf(typeof(AbstractEndpoint)) && !type.IsAbstract)
@@ -18,11 +18,9 @@ public static class EndpointConfiguration
         {
             builder.Services.AddTransient(endpointType);
         }
-
-        return builder;
     }
 
-    public static WebApplication MapPlatformEndpoints(this WebApplication app, Assembly anchor)
+    public static void MapPlatformEndpoints(this WebApplication app, Assembly anchor)
     {
         var endpointTypes = anchor.GetTypes()
             .Where(type => type.IsSubclassOf(typeof(AbstractEndpoint)) && !type.IsAbstract)
@@ -33,7 +31,5 @@ public static class EndpointConfiguration
             var endpoint = (AbstractEndpoint)app.Services.GetRequiredService(endpointType);
             endpoint.Register(app);
         }
-
-        return app;
     }
 }
