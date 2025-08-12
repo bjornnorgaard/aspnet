@@ -7,4 +7,11 @@ services:
       POSTGRES_PASSWORD: "mysecretpassword"
     volumes:
       - ./Volumes/postgres:/var/lib/postgresql/data
-      
+
+  aspire-dashboard:
+    image: mcr.microsoft.com/dotnet/nightly/aspire-dashboard:9.3
+    environment:
+      DOTNET_DASHBOARD_UNSECURED_ALLOW_ANONYMOUS: true
+    ports:
+      - "18888:18888" # UI
+      - "4317:18889" # gRPC
