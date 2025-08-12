@@ -40,8 +40,8 @@ public class GetTodoListIntegrationTests : IClassFixture<TestWebApplicationFacto
         });
 
         Assert.NotNull(result);
-        Assert.True(result.Todos.Count >= 3); // We created at least 3 todos
-        Assert.True(result.Todos.Count <= 10); // Respects the limit
+        Assert.True(result.List.Count >= 3); // We created at least 3 todos
+        Assert.True(result.List.Count <= 10); // Respects the limit
     }
 
     [Fact]
@@ -65,7 +65,7 @@ public class GetTodoListIntegrationTests : IClassFixture<TestWebApplicationFacto
         });
 
         Assert.NotNull(result);
-        Assert.Equal(2, result.Todos.Count);
+        Assert.Equal(2, result.List.Count);
     }
 
     [Fact]
@@ -91,13 +91,15 @@ public class GetTodoListIntegrationTests : IClassFixture<TestWebApplicationFacto
 
         Assert.NotNull(result);
         // Should not include the cursor todo itself
-        Assert.DoesNotContain(result.Todos, t => t.Id == cursorId);
+        Assert.DoesNotContain(result.List, t => t.Id == cursorId);
     }
 
     [Fact]
     public async Task GetTodoList_WithEmptyDatabase_ShouldReturnEmptyList()
     {
-        // Arrange - Ensure clean database (no setup needed)
+        // Arrange - Clean database first
+        await CleanDatabase();
+
         var request = new { Limit = 10 };
 
         // Act
@@ -113,7 +115,7 @@ public class GetTodoListIntegrationTests : IClassFixture<TestWebApplicationFacto
         });
 
         Assert.NotNull(result);
-        Assert.Empty(result.Todos);
+        Assert.Empty(result.List);
     }
 
     [Fact]
@@ -136,7 +138,7 @@ public class GetTodoListIntegrationTests : IClassFixture<TestWebApplicationFacto
         });
 
         Assert.NotNull(result);
-        Assert.Empty(result.Todos);
+        Assert.Empty(result.List);
     }
 
     [Fact]
@@ -183,13 +185,12 @@ public class GetTodoListIntegrationTests : IClassFixture<TestWebApplicationFacto
         });
 
         Assert.NotNull(result);
-        Assert.True(result.Todos.Count >= 3);
+        Assert.True(result.List.Count >= 3);
 
-        // Verify ordering (should be by creation date)
-        var orderedTodos = result.Todos.OrderBy(t => t.CreatedAt).ToList();
-        for (int i = 0; i < result.Todos.Count - 1; i++)
+        // Verify ordering (should be by ID, not CreatedAt)
+        for (int i = 0; i < result.List.Count - 1; i++)
         {
-            Assert.True(result.Todos[i].CreatedAt <= result.Todos[i + 1].CreatedAt);
+            Assert.True(result.List[i].Id.CompareTo(result.List[i + 1].Id) <= 0);
         }
     }
 
@@ -223,12 +224,21 @@ public class GetTodoListIntegrationTests : IClassFixture<TestWebApplicationFacto
         return todos.Select(t => t.Id).ToList();
     }
 
-    private record TodoListResponse(List<TodoItem> Todos);
+    private async Task CleanDatabase()
+    {
+        using var scope = _factory.Services.CreateScope();
+        var context = scope.ServiceProvider.GetRequiredService<Context>();
+
+        // Delete all todos
+        context.Todos.RemoveRange(context.Todos);
+        await context.SaveChangesAsync();
+    }
+
+    private record TodoListResponse(List<TodoItem> List, Guid? NextCursor, bool HasMore);
 
     private record TodoItem(
         Guid Id,
         string Title,
-        string Description,
         bool IsCompleted,
         DateTimeOffset CreatedAt
     );

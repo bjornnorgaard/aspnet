@@ -21,6 +21,11 @@ public class GetTodoByIdEndpoint : AbstractEndpoint
         [FromRoute] Guid id,
         CancellationToken ct) =>
     {
+        if (id == Guid.Empty)
+        {
+            return Results.BadRequest("Invalid GUID format");
+        }
+
         var command = new GetTodoById.Command { Id = id };
         var result = await feature.Handle(command, ct);
 

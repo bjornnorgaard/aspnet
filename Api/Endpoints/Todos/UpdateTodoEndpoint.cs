@@ -24,6 +24,11 @@ public class UpdateTodoEndpoint : AbstractEndpoint
         [FromBody] Request request,
         CancellationToken ct) =>
     {
+        if (id == Guid.Empty)
+        {
+            return Results.BadRequest("Invalid GUID format");
+        }
+
         var command = new UpdateTodo.Command
         {
             Id = id,
@@ -38,6 +43,6 @@ public class UpdateTodoEndpoint : AbstractEndpoint
             return Results.NotFound($"Todo with id {id} not found");
         }
 
-        return Results.Ok();
+        return Results.NoContent();
     };
 }
