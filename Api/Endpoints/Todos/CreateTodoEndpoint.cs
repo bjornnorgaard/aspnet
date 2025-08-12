@@ -25,6 +25,7 @@ public class CreateTodoEndpoint : AbstractEndpoint
     {
         var command = new CreateTodo.Command { Title = request.Title, Description = request.Description };
         var result = await feature.Handle(command, ct);
+
         return Results.Created($"/get-todo-by-id/{result.Todo.Id}", result.Todo);
     };
 }

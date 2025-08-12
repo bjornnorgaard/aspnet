@@ -5,7 +5,7 @@ using Platform.Reflection;
 
 namespace Api.Endpoints.Todos;
 
-public class GetTodoByIdEndpoint(ILogger<GetTodoByIdEndpoint> logger) : AbstractEndpoint
+public class GetTodoByIdEndpoint : AbstractEndpoint
 {
     protected override EndpointDefinition Definition() => new()
     {
@@ -21,8 +21,6 @@ public class GetTodoByIdEndpoint(ILogger<GetTodoByIdEndpoint> logger) : Abstract
         [FromRoute] Guid id,
         CancellationToken ct) =>
     {
-        logger.LogInformation("Handling GetTodoById request with id: {Id}", id);
-
         var command = new GetTodoById.Command { Id = id };
         var result = await feature.Handle(command, ct);
 

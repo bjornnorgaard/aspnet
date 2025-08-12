@@ -10,23 +10,25 @@ public class DeleteTodoEndpoint : AbstractEndpoint
     protected override EndpointDefinition Definition() => new()
     {
         Group = Groups.Todos,
-        Method = HttpMethod.Delete,
+        Method = HttpMethod.Post,
         Version = Versions.V1,
-        Route = "delete-todo/{id:guid}",
+        Route = "delete-todo",
         Description = "Deletes an existing todo item."
     };
 
+    public record DeleteTodoRequest(Guid Id);
+
     protected override Delegate Handle => async (
         [FromServices] DeleteTodo.Handler feature,
-        [FromRoute] Guid id,
+        [FromBody] DeleteTodoRequest request,
         CancellationToken ct) =>
     {
-        var command = new DeleteTodo.Command { Id = id };
+        var command = new DeleteTodo.Command { Id = request.Id };
         var result = await feature.Handle(command, ct);
 
         if (!result.Success)
         {
-            return Results.NotFound($"Todo with ID {id} not found.");
+            return Results.NotFound($"Todo with ID {request.Id} not found.");
         }
 
         return Results.NoContent();
