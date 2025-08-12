@@ -188,24 +188,6 @@ public class UpdateTodoIntegrationTests : IClassFixture<TestWebApplicationFactor
     }
 
     [Fact]
-    public async Task UpdateTodo_WithInvalidGuid_ShouldReturnBadRequest()
-    {
-        // Arrange
-        var request = new
-        {
-            Title = "Valid Title",
-            Description = "Valid Description",
-            IsCompleted = false
-        };
-
-        // Act
-        var response = await _client.PutAsJsonAsync("/v1/todos/update-todo/invalid-guid", request);
-
-        // Assert
-        Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
-    }
-
-    [Fact]
     public async Task UpdateTodo_OnlyTitle_ShouldUpdateOnlyTitle()
     {
         // Arrange

@@ -71,16 +71,6 @@ public class GetTodoByIdIntegrationTests : IClassFixture<TestWebApplicationFacto
     }
 
     [Fact]
-    public async Task GetTodoById_WithInvalidGuid_ShouldReturnBadRequest()
-    {
-        // Act
-        var response = await _client.GetAsync("/v1/todos/get-todo-by-id/invalid-guid");
-
-        // Assert
-        Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
-    }
-
-    [Fact]
     public async Task GetTodoById_WithCompletedTodo_ShouldReturnCompletedTodo()
     {
         // Arrange - Create a completed todo

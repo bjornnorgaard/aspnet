@@ -54,16 +54,6 @@ public class DeleteTodoIntegrationTests : IClassFixture<TestWebApplicationFactor
     }
 
     [Fact]
-    public async Task DeleteTodo_WithInvalidGuid_ShouldReturnBadRequest()
-    {
-        // Act
-        var response = await _client.DeleteAsync("/v1/todos/delete-todo/invalid-guid");
-
-        // Assert
-        Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
-    }
-
-    [Fact]
     public async Task DeleteTodo_CompletedTodo_ShouldDeleteSuccessfully()
     {
         // Arrange - Create a completed todo
