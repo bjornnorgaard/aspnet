@@ -5,20 +5,13 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Platform;
 
-var anchor = typeof(AssemblyAnchor).Assembly;
-
 var builder = WebApplication.CreateBuilder(args);
-
+Platform.Platform.AddServices(builder);
 var cs = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContextPool<Context>(o => o.UseNpgsql(cs));
 
-builder.AddPlatform(anchor);
-
 var app = builder.Build();
+Platform.Platform.UsePlatform(app);
+Platform.Platform.MigrateDatabase<Context>(app);
 
-using var scope = app.Services.CreateScope();
-var context = scope.ServiceProvider.GetRequiredService<Context>();
-await context.Database.MigrateAsync();
-
-app.UsePlatform(anchor);
 app.Run();
