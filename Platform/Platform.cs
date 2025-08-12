@@ -13,6 +13,7 @@ public static class Platform
         var callingAssembly = Assembly.GetCallingAssembly();
         builder.AddPlatformExceptionHandling();
         builder.AddPlatformOpenApi();
+        builder.AddPlatformTelemetry();
         builder.AddPlatformFeatures(callingAssembly);
         builder.AddPlatformEndpoints(callingAssembly);
     }
@@ -21,6 +22,7 @@ public static class Platform
     {
         app.UsePlatformExceptionHandling();
         app.MapPlatformOpenApi();
+        app.MapPlatformTelemetry();
         app.MapPlatformEndpoints(Assembly.GetCallingAssembly());
     }
 
