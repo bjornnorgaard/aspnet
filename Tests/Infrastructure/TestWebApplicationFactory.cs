@@ -23,23 +23,17 @@ public class TestWebApplicationFactory : WebApplicationFactory<AssemblyAnchor>, 
     {
         builder.ConfigureServices(services =>
         {
-            // Remove the existing DbContext registration
-            services.RemoveAll(typeof(DbContextOptions<Context>));
-            services.RemoveAll(typeof(Context));
-
-            // Add the test database context
+            services.RemoveAll<DbContextOptions<Context>>();
+            services.RemoveAll<Context>();
             services.AddDbContext<Context>(options => { options.UseNpgsql(_dbContainer.GetConnectionString()); });
         });
 
-        // Set environment to Testing to avoid conflicts with Program.cs migrations
         builder.UseEnvironment("Testing");
     }
 
     public async Task InitializeAsync()
     {
         await _dbContainer.StartAsync();
-
-        // Initialize the database schema after container starts
         using var scope = Services.CreateScope();
         var context = scope.ServiceProvider.GetRequiredService<Context>();
         await context.Database.EnsureCreatedAsync();
