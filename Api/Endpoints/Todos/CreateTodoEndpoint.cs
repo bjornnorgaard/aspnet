@@ -1,6 +1,7 @@
 ﻿using Api.Endpoints.Constants;
 using Application.Features.Todos;
 using Microsoft.AspNetCore.Mvc;
+using Platform.Configurations;
 using Platform.Reflection;
 
 namespace Api.Endpoints.Todos;
@@ -23,6 +24,10 @@ public class CreateTodoEndpoint : AbstractEndpoint
         [FromBody] Request request,
         CancellationToken ct) =>
     {
+        using var activity = Telemetry.Source.StartActivity();
+        activity?.SetTag("todo.title", request.Title);
+        activity?.SetTag("todo.description", request.Description);
+
         var command = new CreateTodo.Command { Title = request.Title, Description = request.Description };
         var result = await feature.Handle(command, ct);
 

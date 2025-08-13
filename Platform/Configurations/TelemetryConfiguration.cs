@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -24,9 +25,10 @@ public static class TelemetryConfiguration
                     serviceNamespace: opts.Namespace,
                     serviceInstanceId: serviceInstanceId))
             .WithTracing(tracing => tracing
+                .AddSource(Telemetry.SourceName)
+                .AddAspNetCoreInstrumentation()
                 .AddEntityFrameworkCoreInstrumentation()
                 .AddHttpClientInstrumentation()
-                .AddAspNetCoreInstrumentation()
                 .AddOtlpExporter())
             .WithMetrics(metrics => metrics
                 .AddAspNetCoreInstrumentation()
@@ -48,4 +50,10 @@ public static class TelemetryConfiguration
                 .AddOtlpExporter();
         });
     }
+}
+
+public static class Telemetry
+{
+    public const string SourceName = "Platform.Telemetry";
+    public static ActivitySource Source = new(SourceName);
 }
