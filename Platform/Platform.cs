@@ -14,6 +14,7 @@ public static class Platform
         builder.AddPlatformExceptionHandling();
         builder.AddPlatformOpenApi();
         builder.AddPlatformTelemetry();
+        builder.AddPlatformOptions(callingAssembly, builder.Configuration);
         builder.AddPlatformFeatures(callingAssembly);
         builder.AddPlatformEndpoints(callingAssembly);
     }
