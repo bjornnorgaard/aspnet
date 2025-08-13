@@ -1,7 +1,7 @@
-﻿using Api.Database.Models;
+﻿using Application.Database.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace Api.Database;
+namespace Application.Database;
 
 public class Context(DbContextOptions options) : DbContext(options)
 {

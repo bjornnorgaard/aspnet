@@ -1,8 +1,8 @@
-﻿using Api.Database;
+﻿using Application.Database;
 using Microsoft.EntityFrameworkCore;
 using Platform.Reflection;
 
-namespace Api.Features.Todos;
+namespace Application.Features.Todos;
 
 public class GetTodoById
 {

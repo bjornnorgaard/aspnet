@@ -1,4 +1,4 @@
-using Api.Database;
+using Application.Database;
 using Microsoft.EntityFrameworkCore;
 using Platform;
 

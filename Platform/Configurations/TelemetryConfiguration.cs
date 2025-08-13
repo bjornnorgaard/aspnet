@@ -14,7 +14,7 @@ public static class TelemetryConfiguration
     public static void AddPlatformTelemetry(this IHostApplicationBuilder builder)
     {
         var opts = new TelemetryOptions(builder.Configuration);
-        var serviceInstanceId = Environment.MachineName;
+        var serviceInstanceId = $"{Environment.MachineName.ToLower()} {DateTime.Now:HHmmss}";
 
         builder.Services.AddOpenTelemetry()
             .ConfigureResource(resource => resource

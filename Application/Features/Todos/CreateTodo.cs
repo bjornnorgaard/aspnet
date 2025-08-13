@@ -1,8 +1,8 @@
-﻿using Api.Database;
-using Api.Database.Models;
+﻿using Application.Database;
+using Application.Database.Models;
 using Platform.Reflection;
 
-namespace Api.Features.Todos;
+namespace Application.Features.Todos;
 
 public class CreateTodo
 {

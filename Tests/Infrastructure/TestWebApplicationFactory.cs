@@ -1,5 +1,5 @@
 ﻿using Api;
-using Api.Database;
+using Application.Database;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;

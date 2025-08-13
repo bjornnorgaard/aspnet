@@ -1,8 +1,8 @@
 ﻿using System.Net;
 using System.Net.Http.Json;
 using System.Text.Json;
-using Api.Database;
-using Api.Database.Models;
+using Application.Database;
+using Application.Database.Models;
 using Microsoft.Extensions.DependencyInjection;
 using Tests.Infrastructure;
 

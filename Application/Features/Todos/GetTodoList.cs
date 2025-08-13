@@ -1,8 +1,8 @@
-﻿using Api.Database;
+﻿using Application.Database;
 using Microsoft.EntityFrameworkCore;
 using Platform.Reflection;
 
-namespace Api.Features.Todos;
+namespace Application.Features.Todos;
 
 public class GetTodoList
 {
@@ -22,6 +22,7 @@ public class GetTodoList
         {
             public Guid Id { get; set; }
             public string? Title { get; set; }
+            public string? Description { get; set; }
             public bool IsCompleted { get; set; }
             public DateTimeOffset CreatedAt { get; set; }
         }

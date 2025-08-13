@@ -1,6 +1,6 @@
 ﻿using System.Net;
-using Api.Database;
-using Api.Database.Models;
+using Application.Database;
+using Application.Database.Models;
 using Microsoft.Extensions.DependencyInjection;
 using Tests.Infrastructure;
 
