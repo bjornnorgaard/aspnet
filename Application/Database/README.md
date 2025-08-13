@@ -22,5 +22,5 @@ dotnet tool update --global dotnet-ef
 
 ```sh
 # Create a new migration called "Initial"
-dotnet ef migrations add Initial --project ../Api.csproj --output-dir Database/Migrations
+dotnet ef migrations add Initial --project ../Application.csproj --output-dir Database/Migrations
 ```
