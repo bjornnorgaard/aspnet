@@ -6,28 +6,26 @@ using Platform.Configurations;
 
 namespace Platform;
 
-public static class Platform
+public static class PlatformExtensions
 {
-    public static void AddServices(WebApplicationBuilder builder)
+    public static void AddPlatform(this WebApplicationBuilder builder)
     {
         var callingAssembly = Assembly.GetCallingAssembly();
-        builder.AddPlatformExceptionHandling();
         builder.AddPlatformOpenApi();
         builder.AddPlatformTelemetry();
-        builder.AddPlatformOptions(callingAssembly, builder.Configuration);
         builder.AddPlatformFeatures(callingAssembly);
         builder.AddPlatformEndpoints(callingAssembly);
     }
 
-    public static void UsePlatform(WebApplication app)
+    public static void UsePlatform(this WebApplication app)
     {
+        var callingAssembly = Assembly.GetCallingAssembly();
         app.UsePlatformExceptionHandling();
         app.MapPlatformOpenApi();
-        app.MapPlatformTelemetry();
-        app.MapPlatformEndpoints(Assembly.GetCallingAssembly());
+        app.MapPlatformEndpoints(callingAssembly);
     }
 
-    public static void MigrateDatabase<T>(WebApplication app) where T: DbContext
+    public static void MigrateDatabase<T>(this WebApplication app) where T : DbContext
     {
         using var scope = app.Services.CreateScope();
         var context = scope.ServiceProvider.GetRequiredService<T>();

@@ -1,13 +1,14 @@
 using Api.Database;
 using Microsoft.EntityFrameworkCore;
+using Platform;
 
 var builder = WebApplication.CreateBuilder(args);
-Platform.Platform.AddServices(builder);
+builder.AddPlatform();
 var cs = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContextPool<Context>(o => o.UseNpgsql(cs));
 
 var app = builder.Build();
-Platform.Platform.UsePlatform(app);
-Platform.Platform.MigrateDatabase<Context>(app);
+app.UsePlatform();
+app.MigrateDatabase<Context>();
 
 app.Run();
